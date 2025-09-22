@@ -1,5 +1,6 @@
 import HomePage from '../support/pages/homePage'
 import languageLearningPage from '../support/pages/languageLearningPage'
+import forBusinessesPage from '../support/pages/forBusinessesPage'
  
 describe('template spec', () => {
   let testData
@@ -24,4 +25,17 @@ describe('template spec', () => {
     languageLearningPage.visitLanguageLearning()
     languageLearningPage.displayLanguageDetails()
   })
+
+  it('go back to homepage and visit For Businesses page',()=>{
+    // const {urlp} = testData
+    HomePage.visit(testData.urlp)
+    forBusinessesPage.visitForBusinesses()
+    forBusinessesPage.skillTracksCount()
+    forBusinessesPage.fillForm(testData.formDetails)
+  })
+ 
+  Cypress.on('uncaught:exception', () => {
+    return false;
+  });
+
 })
