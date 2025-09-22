@@ -1,6 +1,6 @@
 import HomePage from '../support/pages/homePage'
-
-
+import languageLearningPage from '../support/pages/languageLearningPage'
+ 
 describe('template spec', () => {
   let testData
   before(()=>{
@@ -8,27 +8,20 @@ describe('template spec', () => {
       testData = data;
     })
   })
-  beforeEach('visit coursera',()=>{
-    const {urlp} = testData
-    HomePage.visit(urlp)
+  it('visit coursera and search for web development courses',()=>{
+    //const {urlp} = testData
+    HomePage.visit(testData.urlp)
     cy.url().should('equal','https://www.coursera.org/')
-  })
-  it('search for web development courses',()=>{
     HomePage.searchCourse(testData.courseName)
+    HomePage.applyFilters()
+    HomePage.displayFirstTwoCourseDetails()
+   
   })
-  it('language learning',()=>{
-    cy.window().then((win) => {
-      cy.stub(win, 'open').callsFake((url) => {
-          win.location.href = url;
-      });
-    });
-    cy.contains('Language Learning').click()
-    cy.contains("All results").scrollIntoView()
-    cy.get('#search-page-filters')
+ 
+  it('visit homepage and navigate to language learning',()=>{
+    // const {urlp} = testData
+    HomePage.visit(testData.urlp)
+    languageLearningPage.visitLanguageLearning()
+    languageLearningPage.displayLanguageDetails()
   })
-
-  Cypress.on('uncaught:exception', () => {
-    return false;
-  });
-
 })
